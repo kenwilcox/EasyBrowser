@@ -22,6 +22,8 @@
 		BE6754CC1BD5DE2900C8F974 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE6754CF1BD5DE2900C8F974 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE6754D11BD5DE2900C8F974 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEF6BC1A1BD5E7FC00185F22 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		BEF6BC1B1BD5E7FC00185F22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +40,8 @@
 		BE6754B91BD5DE2900C8F974 = {
 			isa = PBXGroup;
 			children = (
+				BEF6BC1A1BD5E7FC00185F22 /* LICENSE.md */,
+				BEF6BC1B1BD5E7FC00185F22 /* README.md */,
 				BE6754C41BD5DE2900C8F974 /* EasyBrowser */,
 				BE6754C31BD5DE2900C8F974 /* Products */,
 			);
@@ -285,6 +289,7 @@
 				BE6754D61BD5DE2900C8F974 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
