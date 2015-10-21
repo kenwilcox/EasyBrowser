@@ -25,11 +25,32 @@ class ViewController: UIViewController {
     let url = NSURL(string: "http://www.starfall.com")!
     webView.loadRequest(NSURLRequest(URL: url))
     webView.allowsBackForwardNavigationGestures = true
+    
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .Plain, target: self, action: "openTapped")
   }
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
+  }
+  
+  func openTapped() {
+    let ac = UIAlertController(title: "Open page…", message: nil, preferredStyle: .ActionSheet)
+    ac.addAction(UIAlertAction(title: "apple.com", style: .Default, handler: openPage))
+    ac.addAction(UIAlertAction(title: "loopinsight.com", style: .Default, handler: openPage))
+    ac.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+    
+    if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad {
+      ac.modalPresentationStyle = .Popover
+      ac.popoverPresentationController!.barButtonItem = navigationItem.rightBarButtonItem
+    }
+    
+    presentViewController(ac, animated: true, completion: nil)
+  }
+  
+  func openPage(action: UIAlertAction!) {
+    let url = NSURL(string: "https://" + action.title!)!
+    webView.loadRequest(NSURLRequest(URL: url))
   }
   
 }
