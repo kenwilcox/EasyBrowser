@@ -27,6 +27,11 @@ class ViewController: UIViewController {
     webView.allowsBackForwardNavigationGestures = true
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .Plain, target: self, action: "openTapped")
+    let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+    let refresh = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshTapped")
+    
+    toolbarItems = [spacer, refresh]
+    navigationController?.toolbarHidden = false
   }
   
   override func didReceiveMemoryWarning() {
@@ -40,7 +45,7 @@ class ViewController: UIViewController {
     ac.addAction(UIAlertAction(title: "loopinsight.com", style: .Default, handler: openPage))
     ac.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
     
-    if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad {
+    if UIDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
       ac.modalPresentationStyle = .Popover
       ac.popoverPresentationController!.barButtonItem = navigationItem.rightBarButtonItem
     }
@@ -54,6 +59,10 @@ class ViewController: UIViewController {
     webView.loadRequest(NSURLRequest(URL: url))
   }
   
+  func refreshTapped() {
+    UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    webView.reload()
+  }
 }
 
 extension ViewController: WKNavigationDelegate {
