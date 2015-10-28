@@ -50,6 +50,7 @@ class ViewController: UIViewController {
   
   func openPage(action: UIAlertAction!) {
     let url = NSURL(string: "https://" + action.title!)!
+    UIApplication.sharedApplication().networkActivityIndicatorVisible = true
     webView.loadRequest(NSURLRequest(URL: url))
   }
   
@@ -58,5 +59,6 @@ class ViewController: UIViewController {
 extension ViewController: WKNavigationDelegate {
   func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
     title = webView.title
+    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
   }
 }
