@@ -56,5 +56,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: WKNavigationDelegate {
-  
+  func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+    title = webView.title
+  }
 }
