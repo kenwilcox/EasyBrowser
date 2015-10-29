@@ -12,6 +12,7 @@ import WebKit
 class ViewController: UIViewController {
   
   var webView: WKWebView!
+  var progressView: UIProgressView!
   
   override func loadView() {
     webView = WKWebView()
@@ -25,12 +26,16 @@ class ViewController: UIViewController {
     let url = NSURL(string: "http://www.starfall.com")!
     webView.loadRequest(NSURLRequest(URL: url))
     webView.allowsBackForwardNavigationGestures = true
+    webView.addObserver(self, forKeyPath: "estimatedProgress", options: .New, context: nil)
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .Plain, target: self, action: "openTapped")
+    progressView = UIProgressView(progressViewStyle: .Default) // or .Bar
+    progressView.sizeToFit()
+    let progressButton = UIBarButtonItem(customView: progressView)
     let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
     let refresh = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshTapped")
     
-    toolbarItems = [spacer, refresh]
+    toolbarItems = [progressButton, spacer, refresh]
     navigationController?.toolbarHidden = false
   }
   
@@ -62,6 +67,12 @@ class ViewController: UIViewController {
   func refreshTapped() {
     UIApplication.sharedApplication().networkActivityIndicatorVisible = true
     webView.reload()
+  }
+  
+  override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    if keyPath == "estimatedProgress" {
+      progressView.progress = Float(webView.estimatedProgress)
+    }
   }
 }
 
