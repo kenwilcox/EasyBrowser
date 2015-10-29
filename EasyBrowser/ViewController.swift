@@ -83,6 +83,7 @@ extension ViewController: WKNavigationDelegate {
   func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
     title = webView.title
     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    progressView.progress = 0
   }
   
   func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
