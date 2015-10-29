@@ -13,6 +13,7 @@ class ViewController: UIViewController {
   
   var webView: WKWebView!
   var progressView: UIProgressView!
+  var websites = ["apple.com", "loopinsight.com"]
   
   override func loadView() {
     webView = WKWebView()
@@ -23,7 +24,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
-    let url = NSURL(string: "http://www.starfall.com")!
+    let url = NSURL(string: "https://" + websites[0])!
     webView.loadRequest(NSURLRequest(URL: url))
     webView.allowsBackForwardNavigationGestures = true
     webView.addObserver(self, forKeyPath: "estimatedProgress", options: .New, context: nil)
@@ -46,8 +47,9 @@ class ViewController: UIViewController {
   
   func openTapped() {
     let ac = UIAlertController(title: "Open page…", message: nil, preferredStyle: .ActionSheet)
-    ac.addAction(UIAlertAction(title: "apple.com", style: .Default, handler: openPage))
-    ac.addAction(UIAlertAction(title: "loopinsight.com", style: .Default, handler: openPage))
+    for website in websites {
+      ac.addAction(UIAlertAction(title: website, style: .Default, handler: openPage))
+    }
     ac.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
     
     if UIDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
@@ -77,8 +79,25 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: WKNavigationDelegate {
+  
   func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
     title = webView.title
     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
   }
+  
+  func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+    
+    let url = navigationAction.request.URL
+    if let host = url!.host {
+      for website in websites {
+        if host.rangeOfString(website) != nil {
+          decisionHandler(.Allow)
+          return
+        }
+      }
+    }
+    
+    decisionHandler(.Cancel)
+  }
+  
 }
